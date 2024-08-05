@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>My Notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a:hover {
+            color: white;
+        }
+
+        body,
+        html {
+            font-family: 'YS Text', sans-serif;
+            background-color: #fff;
+            -ms-overflow-style: none;
+            /* IE и Edge */
+            scrollbar-width: none;
+            /* Firefox */
+            min-height: 100vh;
+            font-size: 16px;
+            display: block;
+            position: relative;
+        }
+
+        body ::-webkit-scrollbar,
+        html ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .page {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 16px;
+        }
+    </style>
+</head>
+
+<body class="page">
+
+    <style>
+        .diary__container {
+
+            height: 100vh;
+
+            width: 100%;
+
+            display: flex;
+
+            background: #ffddbd;
+
+            padding: 4rem 1.5rem 2rem;
+
+        }
+
+        @media (max-width: 768px) {
+
+            .diary__container {
+
+                flex-direction: column;
+
+                height: 100%;
+
+                padding-top: 20px;
+
+                padding-bottom: 20px;
+
+            }
+
+        }
+
+        .diary__calendar {
+
+            width: 22.5rem;
+
+            background: #fff;
+
+            border-radius: 1rem;
+
+            padding: 1.875rem;
+
+            position: relative;
+
+            z-index: 1;
+
+            margin-right: 2rem;
+
+        }
+
+        @media (max-width: 1200px) {
+
+            .diary__calendar {
+
+                width: 280px;
+
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .diary__calendar {
+
+                width: 100%;
+
+                margin-bottom: 30px;
+
+            }
+
+        }
+
+        .diary__calendar-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding-bottom: 8px;
+
+            border-bottom: 2px solid #ffd3a3;
+
+            margin-bottom: 20px;
+
+        }
+
+        .diary__calendar-title p {
+
+            font-size: 26px;
+
+            line-height: 26px;
+
+            font-weight: 600;
+
+        }
+
+        .diary__calendar-month {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+        .diary__calendar-select {
+
+            display: flex;
+
+            align-items: center;
+
+            position: relative;
+
+        }
+
+        .diary__calendar-select-title {
+
+            font-size: 24px;
+
+            line-height: 24px;
+
+            font-weight: 700;
+
+            -webkit-user-select: none;
+
+            -moz-user-select: none;
+
+            user-select: none;
+
+        }
+
+        .diary__calendar-buttons {
+
+            display: flex;
+
+            background: #ffd3a3;
+
+            border-radius: 1rem;
+
+        }
+
+        .diary__calendar-buttons img {
+
+            width: 26px;
+
+            height: 26px;
+
+            padding: 5px;
+
+            cursor: pointer;
+
+        }
+
+        .diary__calendar-buttons-bg {
+
+            width: 26px;
+
+            height: 26px;
+
+        }
+
+        .diary__calendar-buttons-bg:first-child {
+
+            margin-right: 15px;
+
+        }
+
+        .diary__calendar-buttons-bg:active {
+
+            transform: scale(0.9);
+
+        }
+
+        .diary__calendar-week {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 0 1rem;
+
+            background: #ffd3a3;
+
+            border-radius: 1rem;
+
+            margin-bottom: 1rem;
+
+        }
+
+        .diary__calendar-week p {
+
+            font-weight: 600;
+
+            line-height: 25px;
+
+            color: #fff;
+
+        }
+
+        .diary__calendar-days {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 16px;
+
+        }
+
+        .diary__calendar-notes {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .diary__calendar-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            line-height: 28px;
+
+            width: 14.2%;
+
+            height: 30px;
+
+            margin: 2px 0;
+
+            -webkit-user-select: none;
+
+            -moz-user-select: none;
+
+            user-select: none;
+
+            cursor: pointer;
+
+        }
+
+        .diary__calendar-item:active {
+
+            transform: scale(0.9);
+
+        }
+
+        .diary__calendar-item span {
+
+            font-weight: 600;
+
+        }
+
+        .diary-note {
+
+            width: calc(100% - 22.5rem);
+
+            position: relative;
+
+            z-index: 1;
+
+            background: #8875b7;
+
+            border-radius: 1rem;
+
+            padding: 1.8rem;
+
+        }
+
+        @media (max-width: 1200px) {
+
+            .diary-note {
+
+                width: 840px;
+
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .diary-note {
+
+                width: 100%;
+
+                margin-bottom: 30px;
+
+            }
+
+        }
+
+        .diary-note__wrap {
+
+            max-width: 700px;
+
+            height: 100%;
+
+            margin: 0 auto;
+
+            position: relative;
+
+        }
+
+        .diary-note__datemark {
+
+            height: 55px;
+
+            width: 9rem;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            transform: rotate(-90deg) translate(-100%, -2.75rem);
+
+            transform-origin: top left;
+
+            z-index: 2;
+
+            background: #556680;
+
+            border-radius: 1rem 1rem 0 0;
+
+            color: #fff;
+
+            transition: all 0.4s;
+
+        }
+
+        .diary-note__datemark:hover {
+
+            background: #63799b;
+
+            border: 1px solid #556680;
+
+        }
+
+        .diary-note-body {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            position: relative;
+
+            z-index: 3;
+
+            box-shadow: 10px 3px 15px 0 rgba(65, 25, 129, 0.5);
+
+            padding: 2rem 2.5rem;
+
+            background: #fff;
+
+            border-radius: 1rem;
+
+        }
+
+        @media (max-width: 768px) {
+
+            .diary-note-body {
+
+                min-height: 700px;
+
+                padding: 16px;
+
+            }
+
+        }
+
+        .diary-note-body__notes {
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: scroll;
+
+        }
+
+        .diary-note-body__note {
+
+            margin-bottom: 30px;
+
+        }
+
+        .diary-note-body__image-wrap {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+
+        }
+
+        .diary-note-body__image {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 100%;
+
+            margin-right: 5px;
+
+        }
+
+        .diary-note-body__image img {
+
+            max-width: 100%;
+
+        }
+
+        .diary-note-body__image:last-child {
+
+            margin-right: 0;
+
+        }
+
+        .diary-note-body__title-wrap {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+
+        }
+
+        .diary-note-body__title {
+
+            font-size: 30px;
+
+            line-height: 30px;
+
+        }
+
+        .diary-note-body__wrap {
+
+            display: flex;
+
+            align-items: flex-start;
+
+        }
+
+        .diary-note-body__time {
+
+            font-size: 12px;
+
+            line-height: 12px;
+
+            color: #000000;
+
+            opacity: 0.5;
+
+            padding-top: 3px;
+
+            margin-right: 20px;
+
+        }
+
+        .diary-note-body__text {
+
+            font-size: 14px;
+
+            line-height: 17px;
+
+            width: 90%;
+
+            padding-right: 10px;
+
+        }
+
+        .diary-note-body__del {
+
+            width: 20px;
+
+            height: 20px;
+
+            cursor: pointer;
+
+        }
+
+        .diary-note-body__del img {
+
+            width: 20px;
+
+            height: 20px;
+
+            opacity: 0.5;
+
+        }
+
+        .diary-note__clear-wrap {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        .diary-note__clear {
+
+            font-size: 30px;
+
+            line-height: 30px;
+
+            opacity: 0.5;
+
+        }
+
+        @media (max-width: 1024px) {
+
+            .diary-note__clear {
+
+                font-size: 20px;
+
+                line-height: 20px;
+
+            }
+
+        }
+
+        .diary-note-body__buttons {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            padding-top: 5px;
+
+        }
+
+        .diary-note-body__button-bg {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 50px;
+
+            width: 50px;
+
+            border-radius: 99px;
+
+            background: #ffd3a3;
+
+            margin-right: 10px;
+
+            cursor: pointer;
+
+        }
+
+        .diary-note-body__button-bg label {
+
+            cursor: pointer;
+
+        }
+
+        .diary-note-body__button-bg:last-child {
+
+            margin-right: 0;
+
+        }
+
+        .diary-note-body__button-bg:active {
+
+            transform: scale(0.9);
+
+        }
+
+        .diary-note-body__button {
+
+            height: 20px;
+
+            width: 20px;
+
+            -webkit-user-select: none;
+
+            -moz-user-select: none;
+
+            user-select: none;
+
+        }
+
+        .diary__popup {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            width: 100%;
+
+            height: 100vh;
+
+            background-color: rgba(48, 47, 45, 0.6);
+
+            z-index: 15;
+
+        }
+
+        .diary__popup-wrap {
+
+            display: flex;
+
+            flex-direction: column;
+
+            width: 45%;
+
+            max-height: 45%;
+
+            position: relative;
+
+            left: 190px;
+
+            background-color: #fff;
+
+            border-top-right-radius: 1rem;
+
+            border-top-left-radius: 1rem;
+
+            padding: 20px 25px 10px;
+
+            overflow: scroll;
+
+        }
+
+        .diary__popup-options {
+
+            display: flex;
+
+            margin-bottom: 16px;
+
+            background-color: #fff;
+
+            width: 100%;
+
+            max-height: 80px;
+
+        }
+
+        .diary__popup-options img {
+
+            max-height: 80px;
+
+        }
+
+        .diary__popup-add-image,
+
+        .diary__popup-clean-images {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 100%;
+
+            max-width: 25%;
+
+            background: #ffd3a1;
+
+            cursor: pointer;
+
+            border-radius: 16px;
+
+            transition: background-color 0.3s;
+
+        }
+
+        .diary__popup-add-image:hover,
+
+        .diary__popup-clean-images:hover {
+
+            background-color: #fdb058;
+
+        }
+
+        .diary__popup-add-image {
+
+            margin-right: 5px;
+
+        }
+
+        .diary__popup-add-button,
+
+        .diary__popup-clean-button {
+
+            width: 80%;
+
+            color: #000;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            padding: 5px 10px;
+
+            -webkit-user-select: none;
+
+            -moz-user-select: none;
+
+            user-select: none;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+        }
+
+        .diary__popup-content-image {
+
+            display: flex;
+
+            margin-bottom: 16px;
+
+        }
+
+        .diary__popup-image {
+
+            width: 150px;
+
+            max-width: 100%;
+
+            min-height: 80px;
+
+            margin-right: 5px;
+
+            position: relative;
+
+            border-radius: 16px;
+
+            background-size: cover;
+
+            background-repeat: no-repeat;
+
+            background-position: center;
+
+        }
+
+        .diary__popup-panel {
+
+            display: flex;
+
+            position: absolute;
+
+            top: 0;
+
+            right: 0;
+
+            z-index: 16;
+
+            cursor: pointer;
+
+            transition: all 0.4s;
+
+        }
+
+        .diary__popup-edit-btn {
+
+            border-top: none;
+
+            background: #ffffff;
+
+            padding: 5px;
+
+            border-bottom-left-radius: 10px;
+
+            border-bottom-right-radius: 10px;
+
+            cursor: pointer;
+
+        }
+
+        .diary__popup-edit-btn input {
+
+            cursor: pointer;
+
+        }
+
+        .diary__popup-edit-btn label {
+
+            cursor: pointer;
+
+        }
+
+        .diary__popup-edit-btn img {
+
+            width: 20px;
+
+            height: 20px;
+
+            opacity: 0.5;
+
+        }
+
+        .diary__popup-del-btn {
+
+            border-top: none;
+
+            background: #ffffff;
+
+            padding: 5px;
+
+            border-bottom-left-radius: 10px;
+
+            border-bottom-right-radius: 10px;
+
+        }
+
+        .diary__popup-del-btn img {
+
+            width: 20px;
+
+            height: 20px;
+
+            opacity: 0.5;
+
+        }
+
+        .diary__popup-content {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .diary__popup-title {
+
+            word-break: break-word;
+
+            background: #fff;
+
+            font-size: 30px;
+
+            line-height: 30px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .diary__popup-title:focus {
+
+            outline: none;
+
+        }
+
+        .diary__popup-text {
+
+            font-size: 14px;
+
+            line-height: 17px;
+
+        }
+
+        .diary__popup-text:focus {
+
+            outline: none;
+
+        }
+
+        .diary__popup-buttons {
+
+            width: 45%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            position: relative;
+
+            left: 190px;
+
+            background: #fff;
+
+            border-bottom-right-radius: 1rem;
+
+            border-bottom-left-radius: 1rem;
+
+            padding: 10px 25px;
+
+        }
+
+        .diary__popup-button {
+
+            height: 20px;
+
+            width: 20px;
+
+            -webkit-user-select: none;
+
+            -moz-user-select: none;
+
+            user-select: none;
+
+        }
+
+        .diary__popup-button-bg {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 50px;
+
+            width: 50px;
+
+            border-radius: 99px;
+
+            background: #ffd3a3;
+
+            cursor: pointer;
+
+            margin-right: 10px;
+
+        }
+
+        .diary__popup-button-bg:last-child {
+
+            margin-right: 0;
+
+        }
+
+        .diary__popup-button-bg:active {
+
+            transform: scale(0.9);
+
+        }
+
+        .today {
+
+            border: 3px solid #ffd3a3;
+
+            border-radius: 1rem;
+
+        }
+
+        .day-active {
+
+            border-radius: 1rem;
+
+            border: 2px solid #ffd3a3;
+
+        }
+
+        .day-noted {
+
+            background-color: #556680;
+
+            color: #fff;
+
+            border-radius: 1rem;
+
+        }
+
+        .dif-month {
+
+            color: #ffd3a3;
+
+            cursor: auto;
+
+        }
+
+        .dif-month:active {
+
+            transform: scale(1);
+
+        }
+
+        .none {
+
+            display: none;
+
+        }
+    </style>
+
+    <section class="diary">
+
+        <div class="diary__container">
+
+            <div class="diary__calendar">
+
+                <div class="diary__calendar-title">
+
+                    <p>Записи</p>
+
+                </div>
+
+
+
+                <div class="diary__calendar-month">
+
+                    <div class="diary__calendar-select">
+
+                        <div class="diary__calendar-select-title">
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="diary__calendar-buttons">
+
+                        <div class="diary__calendar-buttons-bg" id="last-month">
+
+                            <img src="https://i.postimg.cc/mDmzXmcv/last.png">
+
+                        </div>
+
+                        <div class="diary__calendar-buttons-bg" id="next-month">
+
+                            <img src="https://i.postimg.cc/MHXch1Vv/next.png">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="diary__calendar-round">
+
+                    <div class="diary__calendar-week">
+
+                        <p>Пн</p>
+
+                        <p>Вт</p>
+
+                        <p>Ср</p>
+
+                        <p>Чт</p>
+
+                        <p>Пт</p>
+
+                        <p>Сб</p>
+
+                        <p>Вс</p>
+
+                    </div>
+
+                    <div class="diary__calendar-days">
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="diary-note">
+
+                <div class="diary-note__wrap">
+
+                    <div class="diary-note__datemark"></div>
+
+                    <div class="diary-note-body">
+
+                        <div class="diary-note-body__notes">
+
+
+
+                        </div>
+
+
+
+                        <div class="diary-note__clear-wrap">
+
+                            <div class="diary-note__clear">Заметок пока нет</div>
+
+                        </div>
+
+
+
+                        <div class="diary-note-body__buttons">
+
+                            <div class="diary-note-body__button-bg" id="add-button">
+
+                                <img src="https://i.postimg.cc/fL31J7g4/add.png" title="Добавить заметку" class="diary-note-body__button">
+
+                            </div>
+
+
+
+                            <div class="diary-note-body__button-bg" id="clear-button">
+
+                                <img src="https://i.postimg.cc/ydwt9JwD/del.png" title="Удалить все" class="diary-note-body__button">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="diary__popup none">
+
+            <div class="diary__popup-wrap">
+
+                <div class="diary__popup-options">
+
+                    <div class="diary__popup-add-image">
+
+                        <input type="file" id="add-img" accept="image/*" hidden />
+
+                        <label for="add-img" class="diary__popup-add-button">
+
+                            Добавить фото
+
+                        </label>
+
+                    </div>
+
+                    <div class="diary__popup-clean-images none">
+
+                        <div class="diary__popup-clean-button" id="clean-images">
+
+                            Удалить все фото
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="diary__popup-content-image">
+
+
+
+                </div>
+
+                <div class="diary__popup-content">
+
+                    <div class="diary__popup-id none"></div>
+
+                    <div class="diary__popup-title" contenteditable="true">Заголовок</div>
+
+                    <div class="diary__popup-text" contenteditable="true">Текст заметки</div>
+
+                </div>
+
+            </div>
+
+            <div class="diary__popup-buttons">
+
+                <div class="diary__popup-button-bg" id="save-button">
+
+                    <img src="https://i.postimg.cc/FFZJnc3r/save.png" title="Сохранить заметку" class="diary__popup-button">
+
+                </div>
+
+                <div class="diary__popup-button-bg" id="cansel-button">
+
+                    <img src="https://i.postimg.cc/C1TmcSKM/del.png" title="Отменить изменения" class="diary__popup-button">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+<script src="main.js"></script>
+
+</html>
